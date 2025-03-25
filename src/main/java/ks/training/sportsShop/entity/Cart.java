@@ -1,9 +1,6 @@
 package ks.training.sportsShop.entity;
-
-
 import java.io.Serializable;
 import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,12 +23,10 @@ public class Cart implements Serializable {
     @Min(value = 0)
     private int sum;
 
-    // user_id
     @OneToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
-    // cart_detail_id
     @OneToMany(mappedBy = "cart")
     List<CartDetail> cartDetails;
 

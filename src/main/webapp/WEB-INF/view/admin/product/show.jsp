@@ -36,7 +36,12 @@
                                                 <a href="/admin/product/create" class="btn btn-primary">Create a
                                                     product</a>
                                             </div>
-
+                                            <%-- Hiển thị thông báo lỗi --%>
+                                            <c:if test="${not empty error}">
+                                                <div class="alert alert-danger">
+                                                        ${error}
+                                                </div>
+                                            </c:if>
                                             <hr />
                                             <table class=" table table-bordered table-hover">
                                                 <thead>
@@ -44,7 +49,8 @@
                                                         <th>ID</th>
                                                         <th>Name</th>
                                                         <th>Price</th>
-                                                        <th>Factory</th>
+                                                        <th>Quantity</th>
+                                                        <th>Sold</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -57,7 +63,8 @@
                                                                 <fmt:formatNumber type="number"
                                                                     value="${product.price}" /> đ
                                                             </td>
-                                                            <td>${product.factory}</td>
+                                                            <td>${product.quantity}</td>
+                                                            <td>${product.sold}</td>
                                                             <td>
                                                                 <a href="/admin/product/${product.id}"
                                                                     class="btn btn-success">View</a>

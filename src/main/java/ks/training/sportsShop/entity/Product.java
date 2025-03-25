@@ -1,14 +1,7 @@
 package ks.training.sportsShop.entity;
-
-
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -47,9 +40,22 @@ public class Product implements Serializable {
     @Min(value = 1, message = "Số lượng cần lớn hơn hoặc bằng 1")
     private long quantity;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     private long sold;
-    private String factory;
-    private String target;
+    private String brand;
+    private String size;
+    private String sportType;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public long getId() {
         return id;
@@ -115,27 +121,28 @@ public class Product implements Serializable {
         this.sold = sold;
     }
 
-    public String getFactory() {
-        return factory;
+
+    public String getBrand() {
+        return brand;
     }
 
-    public void setFactory(String factory) {
-        this.factory = factory;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public String getTarget() {
-        return target;
+    public String getSize() {
+        return size;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
+    public void setSize(String size) {
+        this.size = size;
     }
 
-    @Override
-    public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", price=" + price + ", image=" + image + ", detailDesc="
-                + detailDesc + ", shortDesc=" + shortDesc + ", quantity=" + quantity + ", sold=" + sold + ", factory="
-                + factory + ", target=" + target + "]";
+    public String getSportType() {
+        return sportType;
     }
 
+    public void setSportType(String sportType) {
+        this.sportType = sportType;
+    }
 }

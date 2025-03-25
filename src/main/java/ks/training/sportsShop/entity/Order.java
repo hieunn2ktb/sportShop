@@ -1,9 +1,6 @@
 package ks.training.sportsShop.entity;
-
-
 import java.io.Serializable;
 import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +29,6 @@ public class Order implements Serializable {
 
     private String status;
 
-    // user id
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

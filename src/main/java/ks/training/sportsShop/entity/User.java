@@ -43,8 +43,6 @@ public class User implements Serializable {
 
     private String avatar;
 
-    // roleId
-    // User many -> to one -> role
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

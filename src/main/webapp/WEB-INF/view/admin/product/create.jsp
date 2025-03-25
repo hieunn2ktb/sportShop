@@ -8,9 +8,7 @@
                 <meta charset="utf-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
-                <meta name="author" content="Hỏi Dân IT" />
-                <title>Create Product - Hỏi Dân IT</title>
+                <title>Create Product</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
                 <script>
@@ -100,31 +98,46 @@
 
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Factory:</label>
-                                                    <form:select class="form-select" path="factory">
-                                                        <form:option value="APPLE">Apple (MacBook)</form:option>
-                                                        <form:option value="ASUS">Asus</form:option>
-                                                        <form:option value="LENOVO">Lenovo</form:option>
-                                                        <form:option value="DELL">Dell</form:option>
-                                                        <form:option value="LG">LG</form:option>
-                                                        <form:option value="ACER">Acer</form:option>
+                                                    <form:select class="form-select" path="brand">
+                                                        <form:option value="Nike">Nike</form:option>
+                                                        <form:option value="Adidas">Adidas</form:option>
+                                                        <form:option value="Puma">Puma</form:option>
+                                                        <form:option value="Converse">Converse</form:option>
+                                                        <form:option value="Fila">Fila</form:option>
+                                                        <form:option value="Champion">Champion</form:option>
                                                     </form:select>
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
-                                                    <label class="form-label">Target:</label>
-                                                    <form:select class="form-select" path="target">
-                                                        <form:option value="GAMING">Gaming</form:option>
-                                                        <form:option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng
-                                                        </form:option>
-                                                        <form:option value="THIET-KE-DO-HOA">Thiết kế đồ họa
-                                                        </form:option>
-                                                        <form:option value="MONG-NHE">Mỏng nhẹ</form:option>
-                                                        <form:option value="DOANH-NHAN">Doanh nhân</form:option>
+                                                    <label class="form-label">Size:</label>
+                                                    <form:select class="form-select" path="size">
+                                                        <form:option value="" label="-- Chọn size --"/>
+                                                        <form:option value="XS">XS</form:option>
+                                                        <form:option value="S">S</form:option>
+                                                        <form:option value="M">M</form:option>
+                                                        <form:option value="L">L</form:option>
+                                                        <form:option value="XL">XL</form:option>
+                                                        <form:option value="XXL">XXL</form:option>
+                                                        <form:option value="38">38</form:option>
+                                                        <form:option value="39">39</form:option>
+                                                        <form:option value="40">40</form:option>
+                                                        <form:option value="41">41</form:option>
+                                                        <form:option value="42">42</form:option>
+                                                        <form:option value="43">43</form:option>
+                                                    </form:select>
+                                                </div>
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label class="form-label">Category:</label>
+                                                    <form:select class="form-select" path="category.id">
+                                                        <form:option value="" label="-- Chọn category --"/>
+                                                        <c:forEach var="category" items="${categories}">
+                                                            <form:option value="${category.id}">${category.name}</form:option>
+                                                        </c:forEach>
                                                     </form:select>
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label for="avatarFile" class="form-label">Image:</label>
                                                     <input class="form-control" type="file" id="avatarFile"
-                                                        accept=".png, .jpg, .jpeg" name="hoidanitFile" />
+                                                        accept=".png, .jpg, .jpeg" name="productFile" />
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <img style="max-height: 250px; display: none;" alt="avatar preview"
@@ -134,7 +147,6 @@
                                                     <button type="submit" class="btn btn-primary">Create</button>
                                                 </div>
                                             </form:form>
-
                                         </div>
 
                                     </div>
