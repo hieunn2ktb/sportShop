@@ -9,9 +9,7 @@
                 <meta charset="utf-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
-                <meta name="author" content="Hỏi Dân IT" />
-                <title>Dashboard - Hỏi Dân IT</title>
+                <title>Dashboard</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
@@ -36,7 +34,25 @@
                                                 <a href="/admin/product/create" class="btn btn-primary">Create a
                                                     product</a>
                                             </div>
-                                            <%-- Hiển thị thông báo lỗi --%>
+
+                                            <form action="/admin/product" method="GET" class="row g-3 mt-3">
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control" name="name"
+                                                           placeholder="Nhập tên sản phẩm" value="${keyword}">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-select" name="category">
+                                                        <option value="">-- Chọn danh mục --</option>
+                                                        <c:forEach items="${categories}" var="cat">
+                                                            <option value="${cat.name}" ${category eq cat.name ? 'selected' : ''}>${cat.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+                                                    <a href="/admin/product" class="btn btn-secondary">Reset</a>
+                                                </div>
+                                            </form>
                                             <c:if test="${not empty error}">
                                                 <div class="alert alert-danger">
                                                         ${error}

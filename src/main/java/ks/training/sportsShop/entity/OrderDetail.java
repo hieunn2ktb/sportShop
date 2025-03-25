@@ -19,6 +19,7 @@ public class OrderDetail implements Serializable {
     private long id;
 
     private long quantity;
+
     private double price;
 
     // order_id: long

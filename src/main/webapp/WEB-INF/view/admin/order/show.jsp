@@ -34,7 +34,20 @@
                                             <div class="d-flex">
                                                 <h3>Table Orders</h3>
                                             </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <form action="/admin/order" method="GET" class="d-flex align-items-center gap-2">
+                                                    <input type="text" name="customerName" class="form-control" placeholder="Customer Name">
 
+                                                    <label for="startDate" class="fw-bold">Start Date</label>
+                                                    <input type="date" id="startDate" name="startDate" class="form-control">
+
+                                                    <label for="endDate" class="fw-bold">End Date</label>
+                                                    <input type="date" id="endDate" name="endDate" class="form-control">
+
+                                                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Search</button>
+                                                    <a href="/admin/order" class="btn btn-secondary"><i class="fas fa-sync-alt"></i> Reset</a>
+                                                </form>
+                                            </div>
                                             <hr />
                                             <table class=" table table-bordered table-hover">
                                                 <thead>
@@ -43,6 +56,8 @@
                                                         <th>Total Price</th>
                                                         <th>User</th>
                                                         <th>Status</th>
+                                                        <th>Booking date</th>
+                                                        <th>Cancel Reason</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -56,6 +71,8 @@
                                                             </td>
                                                             <td>${order.user.fullName}</td>
                                                             <td>${order.status}</td>
+                                                            <td>${order.createdAt}</td>
+                                                            <td>${order.cancelReason}</td>
                                                             <td>
                                                                 <a href="/admin/order/${order.id}"
                                                                     class="btn btn-success">View</a>

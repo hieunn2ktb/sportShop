@@ -66,12 +66,16 @@
 
                                                     <div class="mb-3 col-12 col-md-6">
                                                         <label class="form-label">Status:</label>
-                                                        <form:select class="form-select" path="status">
+                                                        <form:select class="form-select" path="status" onchange="toggleCancelReason()">
                                                             <form:option value="PENDING">PENDING</form:option>
                                                             <form:option value="SHIPPING">SHIPPING</form:option>
                                                             <form:option value="COMPLETE">COMPLETE</form:option>
                                                             <form:option value="CANCEL">CANCEL</form:option>
                                                         </form:select>
+                                                    </div>
+                                                    <div class="mb-3 col-12 col-md-6" id="cancelReasonDiv" style="display: none;">
+                                                        <label class="form-label">Lý do hủy đơn:</label>
+                                                        <form:input path="cancelReason" class="form-control" placeholder="Nhập lý do hủy đơn..." />
                                                     </div>
                                                     <div class="col-12 mb-5">
                                                         <button type="submit" class="btn btn-warning">Update</button>
@@ -91,7 +95,7 @@
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                         crossorigin="anonymous"></script>
                     <script src="/js/scripts.js"></script>
-
+                    <script src="/js/cancel-order.js"></script>
                 </body>
 
                 </html>

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,8 +23,12 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Page<Product> fetchProducts(Pageable page) {
-        return this.productRepository.findAll(page);
+    public List<Product> findAll() {
+        return this.productRepository.findAll();
+    }
+
+    public Page<Product> fetchProducts(String name,String category,Pageable page) {
+        return this.productRepository.searchProducts(name,category,page);
     }
 
     public Product createProduct(Product pr) {
