@@ -4,6 +4,7 @@ import ks.training.sportsShop.entity.Role;
 import ks.training.sportsShop.entity.User;
 import ks.training.sportsShop.repository.OrderRepository;
 import ks.training.sportsShop.repository.ProductRepository;
+import ks.training.sportsShop.repository.RoleRepository;
 import ks.training.sportsShop.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,12 @@ public class UserService  {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-    public UserService(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository) {
+    private final RoleRepository roleRepository;
+    public UserService(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
+        this.roleRepository = roleRepository;
     }
     public User saveUser(User user){
         return userRepository.save(user);
@@ -60,10 +63,10 @@ public class UserService  {
         return this.orderRepository.count();
     }
 
-//    public Role getRoleByName(String name) {
-//        return this.roleRepository.findByName(name);
-//    }
-//
+    public Role getRoleByName(String name) {
+        return this.roleRepository.findByName(name);
+    }
+
 //    public User registerDTOtoUser(RegisterDTO registerDTO) {
 //        User user = new User();
 //        user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());

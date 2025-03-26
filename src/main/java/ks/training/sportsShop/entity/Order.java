@@ -31,7 +31,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
     @Column(name = "created_at", updatable = false)

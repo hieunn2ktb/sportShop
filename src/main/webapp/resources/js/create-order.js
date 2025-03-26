@@ -31,13 +31,25 @@ $(document).ready(function () {
         $("#orderDetailsTable").append(newRow);
     });
 
+    // Hàm tính tổng tiền
+    function updateTotalPrice() {
+        let total = 0;
+        $("#orderDetailsTable tr").each(function () {
+            let price = parseFloat($(this).find(".price").val()) || 0;
+            total += price;
+        });
+        $("#totalPrice").val(total.toFixed(2)); // Gán tổng tiền vào input ẩn
+    }
+
     // Tự động cập nhật giá khi chọn sản phẩm
     $(document).on("change", ".productSelect", function () {
+        let row = $(this).closest("tr");
         let unitPrice = $(this).find(":selected").data("price") || 0;
-        let quantity = $(this).closest("tr").find(".quantity").val();
+        let quantity = row.find(".quantity").val();
         let totalPrice = (unitPrice * quantity).toFixed(2);
 
-        $(this).closest("tr").find(".price").val(totalPrice);
+        row.find(".price").val(totalPrice);
+        updateTotalPrice(); // Cập nhật tổng tiền
     });
 
     // Cập nhật giá khi thay đổi số lượng
@@ -48,10 +60,12 @@ $(document).ready(function () {
         let totalPrice = (unitPrice * quantity).toFixed(2);
 
         row.find(".price").val(totalPrice);
+        updateTotalPrice(); // Cập nhật tổng tiền
     });
 
-    // Xoá dòng OrderDetail
+    // Xoá dòng OrderDetail và cập nhật tổng tiền
     $(document).on("click", ".removeRow", function () {
         $(this).closest("tr").remove();
+        updateTotalPrice(); // Cập nhật tổng tiền
     });
 });

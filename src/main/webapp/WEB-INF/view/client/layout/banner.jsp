@@ -12,17 +12,17 @@
                         <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item active rounded">
-                                    <img src="/client/img/hero-img-1.png"
+                                    <img src="/client/img/anta-smartcity-5-1.jpg"
                                         class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">Gaming</a>
+                                    <a href="#" class="btn px-4 py-2 text-white rounded">Dynamic</a>
                                 </div>
                                 <div class="carousel-item rounded">
-                                    <img src="/client/img/hero-img-3.png" class="img-fluid w-100 h-100 rounded"
+                                    <img src="/client/img/e224fd76877587.5c76c58d96cf5-1-e1676886923409.png" class="img-fluid w-100 h-100 rounded"
                                         alt="Second slide">
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">Laptop</a>
+                                    <a href="#" class="btn px-4 py-2 text-white rounded">Sport</a>
                                 </div>
                                 <div class="carousel-item rounded">
-                                    <img src="/client/img/hero-img-2.png" class="img-fluid w-100 h-100 rounded"
+                                    <img src="/client/img/thiet-ke-cua-hang-the-thao-24.jpg" class="img-fluid w-100 h-100 rounded"
                                         alt="Second slide">
                                     <a href="#" class="btn px-4 py-2 text-white rounded">Phụ kiện</a>
                                 </div>

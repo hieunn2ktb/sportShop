@@ -31,7 +31,7 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Products</h1>
+                <h1 class="mt-4">Order</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="/admin/order">Order</a></li>
@@ -59,19 +59,19 @@
                                     <label class="form-label">Receiver Name:</label>
                                     <form:input type="text"
                                                 class="form-control ${not empty errorReceiverName ? 'is-invalid' : ''}"
-                                                path="totalPrice" />
+                                                path="receiverName" />
                                         ${errorReceiverName}
                                 </div>
                                 <div class="mb-3 col-12">
                                     <label class="form-label">Receiver Address:</label>
-                                    <form:textarea type="text"
+                                    <form:input type="text"
                                                    class="form-control ${not empty errorReceiverAddress ? 'is-invalid' : ''}"
                                                    path="receiverAddress" />
                                         ${errorReceiverAddress}
                                 </div>
                                 <div class="mb-3 col-12 col-md-6">
                                     <label class="form-label">Receiver Phone:</label>
-                                    <form:input type="number"
+                                    <form:input type="text"
                                                 class="form-control ${not empty erroRreceiverPhone ? 'is-invalid' : ''}"
                                                 path="receiverPhone" />
                                         ${erroRreceiverPhone}
@@ -118,6 +118,7 @@
                                     <button type="button" id="addRow" class="btn btn-primary">Add Product</button>
                                 </div>
                                 <div class="col-12 mb-5">
+                                    <input type="hidden" id="totalPrice" name="totalPrice" value="0" />
                                     <button type="submit" class="btn btn-primary">Create</button>
                                 </div>
                             </form:form>

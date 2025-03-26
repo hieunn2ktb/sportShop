@@ -99,7 +99,6 @@ public class ProductController {
                                       BindingResult newProductBindingResult,
                                       @RequestParam("productFile") MultipartFile file) {
 
-        // validate
         if (newProductBindingResult.hasErrors()) {
             return "admin/product/update";
         }

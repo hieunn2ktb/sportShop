@@ -119,6 +119,15 @@ public class OrderController {
         if (newProductBindingResult.hasErrors()) {
             return "admin/order/create";
         }
+        for (OrderDetail detail : order.getOrderDetails()) {
+            System.out.println(detail);
+            detail.setOrder(order);
+        }
+        double totalPrice = order.getOrderDetails().stream()
+                .mapToDouble(d -> d.getPrice() * d.getQuantity())
+                .sum();
+        order.setTotalPrice(totalPrice);
+        order.setStatus("PENDING");
         this.orderService.createOrder(order);
         return "redirect:/admin/order";
     }

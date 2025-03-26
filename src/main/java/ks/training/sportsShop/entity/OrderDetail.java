@@ -72,4 +72,14 @@ public class OrderDetail implements Serializable {
         this.product = product;
     }
 
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", order=" + order +
+                ", product=" + product +
+                '}';
+    }
 }

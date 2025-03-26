@@ -16,8 +16,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT COUNT(od) > 0 FROM OrderDetail od WHERE od.product.id = :productId")
     boolean existsByProductId(Long productId);
 
-    @Query("SELECT o FROM Order o WHERE " +
-            "(:customerName IS NULL OR o.user.fullName LIKE %:customerName%) " +
+    @Query("SELECT o FROM Order o LEFT JOIN o.user u WHERE " +
+            "(:customerName IS NULL OR u.fullName LIKE %:customerName%) " +
             "AND (:startOfDay IS NULL OR :endOfDay IS NULL OR o.createdAt BETWEEN :startOfDay AND :endOfDay)")
     Page<Order> findByCustomerNameAndBookingDate(@Param("customerName") String customerName,
                                                  @Param("startOfDay") LocalDateTime startOfDay,
