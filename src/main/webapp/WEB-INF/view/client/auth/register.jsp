@@ -26,6 +26,11 @@
                                             <div class="card-header">
                                                 <h3 class="text-center font-weight-light my-4">Create Account</h3>
                                             </div>
+                                            <c:if test="${not empty passwordError}">
+                                                <div class="alert alert-danger">
+                                                    <c:out value="${passwordError}" />
+                                                </div>
+                                            </c:if>
                                             <div class="card-body">
                                                 <form:form method="post" action="/register"
                                                     modelAttribute="registerUser">

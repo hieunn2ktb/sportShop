@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <h4 class="fw-bold mb-3"> ${product.name}</h4>
-                                            <p class="mb-3">${product.factory}</p>
+                                            <p class="mb-3">${product.sportType}</p>
                                             <h5 class="fw-bold mb-3">
                                                 <fmt:formatNumber type="number" value="${product.price}" /> đ
 
@@ -143,7 +143,6 @@
                                                     <p>
                                                         ${product.detailDesc}
                                                     </p>
-
                                                 </div>
 
                                             </div>

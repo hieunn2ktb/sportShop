@@ -32,16 +32,6 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        List<User> arrUsers = this.userService.getAllUsersByEmail("1@gmail.com");
-        System.out.println(arrUsers);
-
-        model.addAttribute("eric", "test");
-        model.addAttribute("hoidanit", "from controller with model");
-        return "hello";
-    }
-
     @RequestMapping("/admin/user")
     public String getUserPage(Model model,
                               @RequestParam("page") Optional<String> pageOptional) {
@@ -91,15 +81,13 @@ public class UserController {
         if (newUserBindingResult.hasErrors()) {
             return "admin/user/create";
         }
-
-        //
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
 
         user.setAvatar(avatar);
         user.setPassword(hashPassword);
         user.setRole(this.userService.getRoleByName(user.getRole().getName()));
-        // save
+
         this.userService.handleSaveUser(user);
         return "redirect:/admin/user";
     }

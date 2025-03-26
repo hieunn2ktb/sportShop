@@ -47,7 +47,6 @@ public class HomePageController {
 
     @GetMapping("/")
     public String getHomePage(Model model) {
-        // List<Product> products = this.productService.fetchProducts();
         Pageable pageable = PageRequest.of(0, 10);
         Page<Product> prs = this.productService.fetchProducts(pageable);
         List<Product> products = prs.getContent();
@@ -65,12 +64,15 @@ public class HomePageController {
     @PostMapping("/register")
     public String handleRegister(
             @ModelAttribute("registerUser") @Valid RegisterDTO registerDTO,
-            BindingResult bindingResult) {
+            BindingResult bindingResult,Model model) {
 
         if (bindingResult.hasErrors()) {
             return "client/auth/register";
         }
-
+        if(!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())){
+            model.addAttribute("passwordError", "Mật khẩu và xác nhận mật khẩu không khớp!");
+            return "client/auth/register";
+        }
         User user = this.userService.registerDTOtoUser(registerDTO);
 
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
