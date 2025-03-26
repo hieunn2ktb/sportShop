@@ -1,5 +1,7 @@
 package ks.training.sportsShop.service;
 
+import jakarta.validation.Valid;
+import ks.training.sportsShop.dto.RegisterDTO;
 import ks.training.sportsShop.entity.Role;
 import ks.training.sportsShop.entity.User;
 import ks.training.sportsShop.repository.OrderRepository;
@@ -40,7 +42,6 @@ public class UserService  {
 
     public User handleSaveUser(User user) {
         User eric = this.userRepository.save(user);
-        System.out.println(eric);
         return eric;
     }
 
@@ -67,11 +68,11 @@ public class UserService  {
         return this.roleRepository.findByName(name);
     }
 
-//    public User registerDTOtoUser(RegisterDTO registerDTO) {
-//        User user = new User();
-//        user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());
-//        user.setEmail(registerDTO.getEmail());
-//        user.setPassword(registerDTO.getPassword());
-//        return user;
-//    }
+    public User registerDTOtoUser(RegisterDTO registerDTO) {
+        User user = new User();
+        user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());
+        user.setEmail(registerDTO.getEmail());
+        user.setPassword(registerDTO.getPassword());
+        return user;
+    }
 }
