@@ -76,7 +76,7 @@ public class UserController {
     public String createUserPage(Model model,
                                  @ModelAttribute("newUser") @Valid User user,
                                  BindingResult newUserBindingResult,
-                                 @RequestParam("hoidanitFile") MultipartFile file) {
+                                 @RequestParam("file") MultipartFile file) {
 
         if (newUserBindingResult.hasErrors()) {
             return "admin/user/create";
@@ -100,12 +100,12 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String postUpdateUser(Model model, @ModelAttribute("newUser") User hoidanit) {
-        User currentUser = this.userService.getUserById(hoidanit.getId());
+    public String postUpdateUser(Model model, @ModelAttribute("newUser") User user) {
+        User currentUser = this.userService.getUserById(user.getId());
         if (currentUser != null) {
-            currentUser.setAddress(hoidanit.getAddress());
-            currentUser.setFullName(hoidanit.getFullName());
-            currentUser.setPhone(hoidanit.getPhone());
+            currentUser.setAddress(user.getAddress());
+            currentUser.setFullName(user.getFullName());
+            currentUser.setPhone(user.getPhone());
 
             // bug here
             this.userService.handleSaveUser(currentUser);

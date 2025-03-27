@@ -43,9 +43,11 @@
                                             </div>
                                         </li>
 
-                                        <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
-
+                                        <li><a class="dropdown-item" href="account/info">Quản lý tài khoản</a></li>
                                         <li><a class="dropdown-item" href="/order-history">Lịch sử mua hàng</a></li>
+                                        <c:if test="${sessionScope.user.role.name.toString() eq 'ROLE_ADMIN'}">
+                                            <li><a class="dropdown-item" href="/admin">Quản lý Shop</a></li>
+                                        </c:if>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

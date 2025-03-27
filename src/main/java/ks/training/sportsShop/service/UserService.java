@@ -11,6 +11,7 @@ import ks.training.sportsShop.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class UserService  {
         return this.userRepository.findById(id);
     }
 
+    @Transactional
     public void deleteAUser(long id) {
         this.userRepository.deleteById(id);
     }
@@ -78,5 +80,9 @@ public class UserService  {
 
     public User getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    public User findByUsername(String name) {
+        return this.userRepository.findByFullName(name);
     }
 }
