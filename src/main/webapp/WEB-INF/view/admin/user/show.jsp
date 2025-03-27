@@ -58,6 +58,19 @@
                                                                 class="btn btn-warning  mx-2">Update</a>
                                                             <a href="/admin/user/delete/${user.id}"
                                                                 class="btn btn-danger">Delete</a>
+                                                                <c:if test="${user.enabled == true}">
+                                                                    <form id="lock-form-${user.id}" method="post" action="/admin/lock-user/${user.id}" style="display: inline;">
+                                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                                                                        <button type="button" class="btn btn-danger" onclick="confirmAction(${user.id}, 'lock')">Khóa tài khoản</button>
+                                                                    </form>
+                                                                </c:if>
+                                                                <c:if test="${user.enabled == false}">
+                                                                    <form id="unlock-form-${user.id}" method="post" action="/admin/unlock/${user.id}" style="display: inline;">
+                                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                                                                        <button type="button" class="btn btn-success" onclick="confirmAction(${user.id}, 'unlock')">Mở khóa tài khoản</button>
+                                                                    </form>
+                                                                </c:if>
+
                                                         </td>
                                                     </tr>
 
@@ -103,6 +116,17 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
             <script src="/js/scripts.js"></script>
+            <script>
+                function confirmAction(userId, action) {
+                    let message = action === 'lock'
+                        ? "Bạn có chắc chắn muốn KHÓA tài khoản này không?"
+                        : "Bạn có chắc chắn muốn MỞ KHÓA tài khoản này không?";
+
+                    if (confirm(message)) {
+                        document.getElementById(action + "-form-" + userId).submit();
+                    }
+                }
+            </script>
 
         </body>
 

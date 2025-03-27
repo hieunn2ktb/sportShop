@@ -40,6 +40,7 @@ public class User implements Serializable {
 
     private String address;
     private String phone;
+    private boolean enabled = true;
 
     private String avatar;
 
@@ -61,6 +62,14 @@ public class User implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setId(long id) {

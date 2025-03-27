@@ -62,14 +62,19 @@
 
     <!-- Các nút hành động -->
     <div class="mt-4">
-        <a href="/account/edit" class="btn btn-warning btn-custom"><i class="fa fa-edit"></i> Cập Nhật Thông Tin</a>
+        <a href="/account/update" class="btn btn-warning btn-custom"><i class="fa fa-edit"></i> Cập Nhật Thông Tin</a>
     </div>
     <div class="mt-2">
         <a href="/account/change-password" class="btn btn-primary btn-custom"><i class="fa fa-key"></i> Đổi Mật Khẩu</a>
     </div>
     <div class="mt-2">
-        <a href="/account/lock" class="btn btn-danger btn-custom" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản không?');">
+        <a href="/lock" class="btn btn-danger btn-custom" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản không?');">
             <i class="fa fa-lock"></i> Khóa Tài Khoản
+        </a>
+    </div>
+    <div class="mt-4 text-center">
+        <a href="/" class="btn btn-secondary btn-custom">
+            <i class="fa fa-arrow-left"></i> Quay lại
         </a>
     </div>
 </div>

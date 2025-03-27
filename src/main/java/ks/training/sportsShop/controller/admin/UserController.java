@@ -1,4 +1,7 @@
 package ks.training.sportsShop.controller.admin;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import ks.training.sportsShop.entity.User;
 
@@ -14,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,7 +110,6 @@ public class UserController {
             currentUser.setAddress(user.getAddress());
             currentUser.setFullName(user.getFullName());
             currentUser.setPhone(user.getPhone());
-
             // bug here
             this.userService.handleSaveUser(currentUser);
         }
@@ -123,6 +126,30 @@ public class UserController {
     @PostMapping("/admin/user/delete")
     public String postDeleteUser(Model model, @ModelAttribute("newUser") User eric) {
         this.userService.deleteAUser(eric.getId());
+        return "redirect:/admin/user";
+    }
+
+    @PostMapping("/admin/lock-user/{id}")
+    public String lockUser(@PathVariable long id, Principal principal, HttpServletRequest request, HttpServletResponse response) {
+        User user = this.userService.getUserById(id);
+        user.setEnabled(false);
+        this.userService.handleSaveUser(user);
+        if (principal.getName().equals(user.getEmail())) {
+            try {
+                request.logout(); // Spring Security logout
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
+            return "redirect:/login"; // Chuyển hướng về trang login
+        }
+        return "redirect:/admin/user";
+    }
+
+    @PostMapping("/admin/unlock/{id}")
+    public String unlockUser(@PathVariable long id) {
+        User user = this.userService.getUserById(id);
+        user.setEnabled(true);
+        this.userService.handleSaveUser(user);
         return "redirect:/admin/user";
     }
 }

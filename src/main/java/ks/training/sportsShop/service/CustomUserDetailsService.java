@@ -1,5 +1,6 @@
 package ks.training.sportsShop.service;
 
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,12 +22,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         ks.training.sportsShop.entity.User user = this.userService.getUserByEmail(username);
         if (user == null){
-            throw new UsernameNotFoundException("user not found");
+            throw new UsernameNotFoundException("Invalid email or password");
         }
-        return new User(
-                user.getEmail(),
-                user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getName())));
+        if (!user.isEnabled()) {
+            throw new DisabledException("Tài khoản của bạn đã bị khóa");
+        }
+        return User.builder()
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .authorities(new SimpleGrantedAuthority(user.getRole().getName()))
+                .accountLocked(!user.isEnabled())
+                .build();
 
     }
 }

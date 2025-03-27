@@ -4,6 +4,9 @@ package ks.training.sportsShop.controller.client;
 import java.security.Principal;
 import java.util.List;
 
+import jakarta.persistence.EntityManager;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletResponse;
 import ks.training.sportsShop.dto.RegisterDTO;
 import ks.training.sportsShop.entity.Order;
 import ks.training.sportsShop.entity.Product;
@@ -15,6 +18,11 @@ import ks.training.sportsShop.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +33,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -36,10 +45,11 @@ public class HomePageController {
     private final PasswordEncoder passwordEncoder;
     private final UploadService uploadService;
 
+
     public HomePageController(
             ProductService productService,
             UserService userService,
-            OrderService orderService, PasswordEncoder passwordEncoder, UploadService uploadService) {
+            OrderService orderService, PasswordEncoder passwordEncoder, UploadService uploadService, EntityManager entityManager, UserDetailsService userDetailsService) {
         this.productService = productService;
         this.userService = userService;
         this.orderService = orderService;
@@ -100,15 +110,28 @@ public class HomePageController {
 
     @GetMapping("/account/update")
     public String getUpdateAccount(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("newUser", user);
+        if (principal == null) {
+            return "redirect:/login"; // Chuyển hướng nếu chưa đăng nhập
+        }
+
+        User user = userService.getUserByEmail(principal.getName());
+        System.out.println("name:"+principal.getName());
+        System.out.println(user);
+        if (user == null) {
+            return "redirect:/error"; // Tránh lỗi nếu user không tồn tại
+        }
+
+        model.addAttribute("newUser", user); // Đảm bảo model có newUser
         return "client/account/update";
     }
 
+
     @PostMapping("/account/update")
     public String handleUpdateAcc(@ModelAttribute("newUser") User user,
-                                  @RequestParam("accountFile") MultipartFile file) {
+                                  @RequestParam("accountFile") MultipartFile file,
+                                  HttpServletRequest request) { // Thêm HttpServletRequest
         User currentUser = this.userService.getUserById(user.getId());
+
         if (currentUser != null) {
             if (!file.isEmpty()) {
                 String img = this.uploadService.handleSaveUploadFile(file, "avatar");
@@ -119,10 +142,66 @@ public class HomePageController {
             currentUser.setPhone(user.getPhone());
 
             this.userService.handleSaveUser(currentUser);
-
+            HttpSession newSession = request.getSession(true);
+            newSession.setAttribute("fullName", currentUser.getFullName());
+            newSession.setAttribute("avatar", currentUser.getAvatar());
+            newSession.setAttribute("user", currentUser);
         }
-        return "redirect:account/info";
+
+        return "redirect:/account/info";
     }
+
+    @GetMapping("/account/change-password")
+    public String showChangePasswordPage() {
+        return "client/account/change-password";
+    }
+
+    @PostMapping("/account/update-password")
+    public String handleChangePassword(@RequestParam("currentPassword") String currentPassword,
+                                       @RequestParam("newPassword") String newPassword,
+                                       @RequestParam("confirmPassword") String confirmPassword,
+                                       Principal principal,
+                                       RedirectAttributes redirectAttributes) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        User user = userService.getUserByEmail(principal.getName());
+        if (user == null) {
+            return "redirect:/error";
+        }
+
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            redirectAttributes.addFlashAttribute("error", "Mật khẩu hiện tại không đúng!");
+            return "redirect:/account/change-password";
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            redirectAttributes.addFlashAttribute("error", "Mật khẩu mới không khớp!");
+            return "redirect:/account/change-password";
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userService.handleSaveUser(user);
+
+        redirectAttributes.addFlashAttribute("success", "Đổi mật khẩu thành công!");
+        return "redirect:/account/change-password";
+    }
+    @GetMapping("/lock")
+    public String lockUser( Principal principal, HttpServletRequest request, HttpServletResponse response) {
+        User user = userService.getUserByEmail(principal.getName());
+        user.setEnabled(false);
+        this.userService.handleSaveUser(user);
+        if (principal.getName().equals(user.getEmail())) {
+            try {
+                request.logout();
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
+        }
+        return "redirect:/login";
+    }
+
 
     @GetMapping("/login")
     public String getLoginPage(Model model) {

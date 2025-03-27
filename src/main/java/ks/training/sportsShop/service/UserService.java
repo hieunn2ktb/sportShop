@@ -1,5 +1,6 @@
 package ks.training.sportsShop.service;
 
+import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
 import ks.training.sportsShop.dto.RegisterDTO;
 import ks.training.sportsShop.entity.Role;
@@ -21,11 +22,13 @@ public class UserService  {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final RoleRepository roleRepository;
-    public UserService(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository, RoleRepository roleRepository) {
+
+    public UserService(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository, RoleRepository roleRepository, EntityManager entityManager) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
         this.roleRepository = roleRepository;
+
     }
     public User saveUser(User user){
         return userRepository.save(user);
@@ -41,6 +44,7 @@ public class UserService  {
         return this.userRepository.findOneByEmail(email);
     }
 
+    @Transactional
     public User handleSaveUser(User user) {
         User eric = this.userRepository.save(user);
         return eric;
