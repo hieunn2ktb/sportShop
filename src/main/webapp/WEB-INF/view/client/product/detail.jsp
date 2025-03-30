@@ -8,7 +8,7 @@
 
                 <head>
                     <meta charset="utf-8">
-                    <title> ${product.name} - Laptopshop</title>
+                    <title> ${product.name}</title>
                     <meta content="width=device-width, initial-scale=1.0" name="viewport">
                     <meta content="" name="keywords">
                     <meta content="" name="description">
@@ -97,23 +97,23 @@
                                                 ${product.shortDesc}
                                             </p>
 
-                                            <div class="input-group quantity mb-5" style="width: 100px;">
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                        <i class="fa fa-minus"></i>
-                                                    </button>
-                                                </div>
-                                                <input type="text"
-                                                    class="form-control form-control-sm text-center border-0" value="1"
-                                                    data-cart-detail-index="0">
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <!-- <form action="/add-product-from-view-detail" method="post"
-                                                modelAttribute="product"> -->
+<%--                                            <div class="input-group quantity mb-5" style="width: 100px;">--%>
+<%--                                                <div class="input-group-btn">--%>
+<%--                                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">--%>
+<%--                                                        <i class="fa fa-minus"></i>--%>
+<%--                                                    </button>--%>
+<%--                                                </div>--%>
+<%--                                                <input type="text"--%>
+<%--                                                    class="form-control form-control-sm text-center border-0" value="1"--%>
+<%--                                                    data-cart-detail-index="0">--%>
+<%--                                                <div class="input-group-btn">--%>
+<%--                                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">--%>
+<%--                                                        <i class="fa fa-plus"></i>--%>
+<%--                                                    </button>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+                                             <form action="/add-product-from-view-detail" method="post"
+                                                modelAttribute="product">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                             <input class="form-control d-none" type="text" value="${product.id}"
                                                 name="id" />
@@ -125,7 +125,7 @@
                                                     class="fa fa-shopping-bag me-2 text-primary"></i>
                                                 Add to cart
                                             </button>
-                                            <!-- </form> -->
+                                             </form>
 
                                         </div>
                                         <div class="col-lg-12">

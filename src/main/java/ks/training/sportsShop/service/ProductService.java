@@ -1,10 +1,12 @@
 package ks.training.sportsShop.service;
 
 import jakarta.servlet.http.HttpSession;
+import ks.training.sportsShop.dto.ProductCriteriaDTO;
 import ks.training.sportsShop.entity.*;
 import ks.training.sportsShop.repository.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -194,4 +196,10 @@ public class ProductService {
         }
 
     }
+
+    public Cart fetchByUser(User currentUser) {
+        return this.cartRepository.findByUser(currentUser);
+    }
+
+
 }
