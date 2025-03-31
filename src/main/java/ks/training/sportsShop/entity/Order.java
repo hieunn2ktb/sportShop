@@ -34,6 +34,9 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
+    @OneToMany(mappedBy = "order")
+    private List<Notification> notifications;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 

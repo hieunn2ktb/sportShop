@@ -1,6 +1,8 @@
 package ks.training.sportsShop.service;
 
 import ks.training.sportsShop.entity.Notification;
+import ks.training.sportsShop.entity.Order;
+import ks.training.sportsShop.entity.User;
 import ks.training.sportsShop.repository.NotificationRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +30,17 @@ public class NotificationService {
     public Notification createNotification(String title, String message) {
         Notification notification = new Notification(title, message);
         return notificationRepository.save(notification);
+    }
+    public List<Notification> getNotificationsForUser(Long userId) {
+        return notificationRepository.findByUserIdOrderByCreatedAtDesc(userId);
+    }
+
+    public void createNotificationClient(User user, Order order, String title, String message) {
+        Notification notification = new Notification();
+        notification.setUser(user);
+        notification.setOrder(order);
+        notification.setTitle(title);
+        notification.setMessage(message);
+        notificationRepository.save(notification);
     }
 }

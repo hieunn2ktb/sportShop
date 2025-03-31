@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import ks.training.sportsShop.entity.Order;
 import ks.training.sportsShop.entity.OrderDetail;
 import ks.training.sportsShop.entity.Product;
+import ks.training.sportsShop.service.NotificationService;
 import ks.training.sportsShop.service.OrderService;
 import ks.training.sportsShop.service.ProductService;
 import org.springframework.data.domain.Page;
@@ -24,10 +25,11 @@ import java.util.Optional;
 public class OrderController {
     private final OrderService orderService;
     private final ProductService productService;
-
-    public OrderController(OrderService orderService, ProductService productService) {
+    private final NotificationService notificationService;
+    public OrderController(OrderService orderService, ProductService productService, NotificationService notificationService) {
         this.orderService = orderService;
         this.productService = productService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/admin/order")
@@ -90,6 +92,9 @@ public class OrderController {
 
     @PostMapping("/admin/order/update")
     public String handleUpdateOrder(@ModelAttribute("newOrder") Order order,@RequestParam String status,@RequestParam(required = false) String cancelReason) {
+        Order existingOrder = orderService.fetchOrderById(order.getId()).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setUser(existingOrder.getUser());
+        System.out.println(order.getUser().getId());
         this.orderService.updateOrder(order,status,cancelReason);
         return "redirect:/admin/order";
     }

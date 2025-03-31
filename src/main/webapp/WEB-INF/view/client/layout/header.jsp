@@ -27,11 +27,10 @@
                                     ${sessionScope.sum}
                             </span>
                         </a>
-                        <a href="/cart" class="position-relative me-4 my-auto">
+                        <a href="/notifications" class="position-relative me-4 my-auto">
                             <i class="fa fa-bell fa-2x"></i>
-                            <span class="position-absolute bg-danger rounded-circle d-flex align-items-center justify-content-center text-white px-1"
+                            <span class="position-absolute rounded-circle d-flex align-items-center justify-content-center text-white px-1"
                                   style="top: -5px; left: 15px; height: 20px; min-width: 20px;" id="notificationCount">
-                             3
                         </span>
                         </a>
 

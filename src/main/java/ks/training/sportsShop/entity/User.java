@@ -54,6 +54,9 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "user")
     private Cart cart;
 
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
+
     @Override
     public String toString() {
         return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName

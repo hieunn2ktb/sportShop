@@ -20,12 +20,13 @@ import java.util.Optional;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
-
+    private final NotificationService notificationService;
     public OrderService(
             OrderRepository orderRepository,
-            OrderDetailRepository orderDetailRepository) {
+            OrderDetailRepository orderDetailRepository, NotificationService notificationService) {
         this.orderDetailRepository = orderDetailRepository;
         this.orderRepository = orderRepository;
+        this.notificationService = notificationService;
     }
 
     public Page<Order> fetchAllOrders(String customerName, LocalDate startDate, LocalDate endDate, Pageable page) {
@@ -68,6 +69,9 @@ public class OrderService {
                 currentOrder.setCancelReason(null);
             }
             currentOrder.setStatus(order.getStatus());
+            String title = "Cập nhật đơn hàng #" + order.getId();
+            String message = "Đơn hàng của bạn đã chuyển sang trạng thái: " + status;
+            notificationService.createNotificationClient(order.getUser(), order, title, message);
             this.orderRepository.save(currentOrder);
         }
     }

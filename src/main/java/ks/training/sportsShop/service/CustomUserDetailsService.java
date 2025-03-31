@@ -33,6 +33,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .authorities(new SimpleGrantedAuthority(user.getRole().getName()))
                 .accountLocked(!user.isEnabled())
                 .build();
-
     }
 }

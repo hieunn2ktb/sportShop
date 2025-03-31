@@ -13,6 +13,14 @@ public class Notification {
     private String message;
     private LocalDateTime createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     public Notification() {
         this.createdAt = LocalDateTime.now();
     }
@@ -25,6 +33,22 @@ public class Notification {
 
     public Long getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public void setId(Long id) {

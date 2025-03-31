@@ -8,13 +8,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
 import ks.training.sportsShop.dto.RegisterDTO;
+import ks.training.sportsShop.entity.Notification;
 import ks.training.sportsShop.entity.Order;
 import ks.training.sportsShop.entity.Product;
 import ks.training.sportsShop.entity.User;
-import ks.training.sportsShop.service.OrderService;
-import ks.training.sportsShop.service.ProductService;
-import ks.training.sportsShop.service.UploadService;
-import ks.training.sportsShop.service.UserService;
+import ks.training.sportsShop.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,17 +42,18 @@ public class HomePageController {
     private final OrderService orderService;
     private final PasswordEncoder passwordEncoder;
     private final UploadService uploadService;
-
+    private final NotificationService notificationService;
 
     public HomePageController(
             ProductService productService,
             UserService userService,
-            OrderService orderService, PasswordEncoder passwordEncoder, UploadService uploadService, EntityManager entityManager, UserDetailsService userDetailsService) {
+            OrderService orderService, PasswordEncoder passwordEncoder, UploadService uploadService, EntityManager entityManager, UserDetailsService userDetailsService, NotificationService notificationService) {
         this.productService = productService;
         this.userService = userService;
         this.orderService = orderService;
         this.passwordEncoder = passwordEncoder;
         this.uploadService = uploadService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/")
@@ -227,6 +226,13 @@ public class HomePageController {
 
         return "client/cart/order-history";
     }
-
+    @GetMapping("/notifications")
+    public String getUserNotifications(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+        List<Notification> notifications = notificationService.getNotificationsForUser(id);
+        model.addAttribute("notifications", notifications);
+        return "client/notification/show";
+    }
 
 }
