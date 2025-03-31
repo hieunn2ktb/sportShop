@@ -4,10 +4,12 @@ import jakarta.servlet.http.HttpSession;
 import ks.training.sportsShop.dto.ProductCriteriaDTO;
 import ks.training.sportsShop.entity.*;
 import ks.training.sportsShop.repository.*;
+import ks.training.sportsShop.service.specification.ProductSpecs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +33,8 @@ public class ProductService {
         this.cartDetailRepository = cartDetailRepository;
         this.orderDetailRepository = orderDetailRepository;
     }
+
+
 
     public List<Product> findAll() {
         return this.productRepository.findAll();
@@ -201,5 +205,56 @@ public class ProductService {
         return this.cartRepository.findByUser(currentUser);
     }
 
+    public Page<Product> fetchProductsWithSpec(Pageable pageable,Optional<String> factory,Optional<List<String>> price) {
+        if (factory == null && price == null) {
+            return this.productRepository.findAll(pageable);
+        }
+        Specification<Product> combinedSpec = Specification.where(null);
+
+        if (factory != null && factory.isPresent()){
+            Specification<Product> currenSpecs = ProductSpecs.nameLike(factory.get());
+            combinedSpec = currenSpecs.and(currenSpecs);
+        }
+        if (price != null && price.isPresent()) {
+            Specification<Product> currentSpecs = this.buildPriceSpecification(price.get());
+            combinedSpec = combinedSpec.and(currentSpecs);
+        }
+
+
+        return this.productRepository.findAll(combinedSpec, pageable);
+    }
+    public Specification<Product> buildPriceSpecification(List<String> price) {
+        Specification<Product> combinedSpec = Specification.where(null); // disconjunction
+        for (String p : price) {
+            double min = 0;
+            double max = 0;
+
+            switch (p) {
+                case "duoi-1-trieu":
+                    min = 1;
+                    max = 1000000;
+                    break;
+                case "1-3-trieu":
+                    min = 1000000;
+                    max = 1500000;
+                    break;
+                case "3-5-trieu":
+                    min = 3000000;
+                    max = 5000000;
+                    break;
+                case "tren-5-trieu":
+                    min = 5000000;
+                    max = 200000000;
+                    break;
+            }
+
+            if (min != 0 && max != 0) {
+                Specification<Product> rangeSpec = ProductSpecs.matchMultiplePrice(min, max);
+                combinedSpec = combinedSpec.or(rangeSpec);
+            }
+        }
+
+        return combinedSpec;
+    }
 
 }

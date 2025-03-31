@@ -37,6 +37,12 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 			<version>2.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>6.4.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
 
 
 		<!-- Spring Boot Web -->

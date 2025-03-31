@@ -76,35 +76,35 @@
                                                 <div class="mb-2"><b>Hãng sản xuất</b></div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-1"
-                                                        value="APPLE">
-                                                    <label class="form-check-label" for="factory-1">Apple</label>
+                                                        value="Nike">
+                                                    <label class="form-check-label" for="factory-1">Nike</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-2"
-                                                        value="ASUS">
-                                                    <label class="form-check-label" for="factory-2">Asus</label>
+                                                        value="Adidas">
+                                                    <label class="form-check-label" for="factory-2">Adidas</label>
                                                 </div>
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-3"
-                                                        value="LENOVO">
-                                                    <label class="form-check-label" for="factory-3">Lenovo</label>
+                                                        value="Puma">
+                                                    <label class="form-check-label" for="factory-3">Puma</label>
                                                 </div>
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-4"
-                                                        value="DELL">
-                                                    <label class="form-check-label" for="factory-4">Dell</label>
+                                                        value="Converse">
+                                                    <label class="form-check-label" for="factory-4">Converse</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-5"
-                                                        value="LG">
-                                                    <label class="form-check-label" for="factory-5">LG</label>
+                                                        value="Fila">
+                                                    <label class="form-check-label" for="factory-5">Fila</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-6"
-                                                        value="ACER">
-                                                    <label class="form-check-label" for="factory-6">Acer</label>
+                                                        value="Champion">
+                                                    <label class="form-check-label" for="factory-6">Champion</label>
                                                 </div>
 
                                             </div>
@@ -113,28 +113,28 @@
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="price-2"
-                                                        value="duoi-10-trieu">
-                                                    <label class="form-check-label" for="price-2">Dưới 10 triệu</label>
+                                                        value="duoi-1-trieu">
+                                                    <label class="form-check-label" for="price-2">Dưới 1 triệu</label>
                                                 </div>
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="price-3"
-                                                        value="10-15-trieu">
-                                                    <label class="form-check-label" for="price-3">Từ 10 - 15
+                                                        value="1-3-trieu">
+                                                    <label class="form-check-label" for="price-3">Từ 1 - 3
                                                         triệu</label>
                                                 </div>
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="price-4"
-                                                        value="15-20-trieu">
-                                                    <label class="form-check-label" for="price-4">Từ 15 - 20
+                                                        value="3-5-trieu">
+                                                    <label class="form-check-label" for="price-4">Từ 3 - 5
                                                         triệu</label>
                                                 </div>
 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="price-5"
-                                                        value="tren-20-trieu">
-                                                    <label class="form-check-label" for="price-5">Trên 20 triệu</label>
+                                                        value="tren-5-trieu">
+                                                    <label class="form-check-label" for="price-5">Trên 5 triệu</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -199,31 +199,39 @@
 
                                             <c:if test="${totalPages > 0}">
                                                 <div class="pagination d-flex justify-content-center mt-5">
+                                                    <!-- Kiểm tra nếu queryString rỗng thì dùng '?' ngược lại dùng '&' -->
+                                                    <c:set var="separator" value="${empty queryString ? '?' : '&'}" />
+
+                                                    <!-- Nút Previous -->
                                                     <li class="page-item">
                                                         <a class="${1 eq currentPage ? 'disabled page-link' : 'page-link'}"
-                                                            href="/products?page=${currentPage - 1}${queryString}"
-                                                            aria-label="Previous">
+                                                           href="/products?page=${currentPage - 1}${separator}${queryString}"
+                                                           aria-label="Previous">
                                                             <span aria-hidden="true">&laquo;</span>
                                                         </a>
                                                     </li>
+
+                                                    <!-- Danh sách số trang -->
                                                     <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
                                                         <li class="page-item">
                                                             <a class="${(loop.index + 1) eq currentPage ? 'active page-link' : 'page-link'}"
-                                                                href="/products?page=${loop.index + 1}${queryString}">
-                                                                ${loop.index + 1}
+                                                               href="/products?page=${loop.index + 1}${separator}${queryString}">
+                                                                    ${loop.index + 1}
                                                             </a>
                                                         </li>
                                                     </c:forEach>
+
+                                                    <!-- Nút Next -->
                                                     <li class="page-item">
                                                         <a class="${totalPages eq currentPage ? 'disabled page-link' : 'page-link'}"
-                                                            href="/products?page=${currentPage + 1}${queryString}"
-                                                            aria-label="Next">
+                                                           href="/products?page=${currentPage + 1}${separator}${queryString}"
+                                                           aria-label="Next">
                                                             <span aria-hidden="true">&raquo;</span>
                                                         </a>
                                                     </li>
-
                                                 </div>
                                             </c:if>
+
                                         </div>
                                     </div>
                                 </div>
@@ -249,6 +257,7 @@
                     <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
 
                     <!-- Template Javascript -->
+                    <script src="/client/js/filter.js"></script>
                     <script src="/client/js/main.js"></script>
                 </body>
 

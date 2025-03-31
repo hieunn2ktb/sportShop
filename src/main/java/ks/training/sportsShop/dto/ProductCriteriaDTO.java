@@ -6,8 +6,7 @@ import java.util.Optional;
 
 public class ProductCriteriaDTO {
     private Optional<String> page;
-    private Optional<List<String>> factory;
-    private Optional<List<String>> target;
+    private Optional<String> factory;
     private Optional<List<String>> price;
     private Optional<String> sort;
 
@@ -19,20 +18,12 @@ public class ProductCriteriaDTO {
         this.page = page;
     }
 
-    public Optional<List<String>> getFactory() {
+    public Optional<String> getFactory() {
         return factory;
     }
 
-    public void setFactory(Optional<List<String>> factory) {
+    public void setFactory(Optional<String> factory) {
         this.factory = factory;
-    }
-
-    public Optional<List<String>> getTarget() {
-        return target;
-    }
-
-    public void setTarget(Optional<List<String>> target) {
-        this.target = target;
     }
 
     public Optional<List<String>> getPrice() {
