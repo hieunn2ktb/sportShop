@@ -97,7 +97,6 @@ public class HomePageController {
         // save
         this.userService.handleSaveUser(user);
         return "redirect:/login";
-
     }
 
     @GetMapping("/account/info")
@@ -226,13 +225,6 @@ public class HomePageController {
 
         return "client/cart/order-history";
     }
-    @GetMapping("/notifications")
-    public String getUserNotifications(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        long id = (long) session.getAttribute("id");
-        List<Notification> notifications = notificationService.getNotificationsForUser(id);
-        model.addAttribute("notifications", notifications);
-        return "client/notification/show";
-    }
+
 
 }

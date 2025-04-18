@@ -1,7 +1,6 @@
 package ks.training.sportsShop.service;
 
 import jakarta.persistence.EntityManager;
-import jakarta.validation.Valid;
 import ks.training.sportsShop.dto.RegisterDTO;
 import ks.training.sportsShop.entity.Role;
 import ks.training.sportsShop.entity.User;
@@ -30,24 +29,21 @@ public class UserService  {
         this.roleRepository = roleRepository;
 
     }
-    public User saveUser(User user){
-        return userRepository.save(user);
+    public User findById(long id){
+        return this.userRepository.findById(id);
     }
-    public List<User>getAllUserByEmail(String email){
-        return this.userRepository.findOneByEmail(email);
-    }
+
     public Page<User> getAllUsers(Pageable page) {
         return this.userRepository.findAll(page);
     }
 
-    public List<User> getAllUsersByEmail(String email) {
-        return this.userRepository.findOneByEmail(email);
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
     }
 
     @Transactional
-    public User handleSaveUser(User user) {
-        User eric = this.userRepository.save(user);
-        return eric;
+    public void handleSaveUser(User user) {
+        this.userRepository.save(user);
     }
 
     public User getUserById(long id) {

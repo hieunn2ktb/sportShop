@@ -81,7 +81,7 @@
                                     </c:if>
                                     <c:forEach var="order" items="${orders}">
                                         <tr>
-                                            <td colspan="2">Order Id = ${order.id}</td>
+                                            <td colspan="2">Đơn hàng ${order.id}</td>
                                             <td colspan="1">
                                                 <fmt:formatNumber type="number" value=" ${order.totalPrice}" />
                                                 đ
@@ -140,8 +140,6 @@
                 </div>
                 <!-- Cart Page End -->
 
-
-                <jsp:include page="../layout/footer.jsp" />
 
 
                 <!-- Back to Top -->

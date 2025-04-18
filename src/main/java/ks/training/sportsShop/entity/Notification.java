@@ -2,6 +2,7 @@ package ks.training.sportsShop.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "notifications")
@@ -13,9 +14,11 @@ public class Notification {
     private String message;
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "is_system")
+    private Boolean isSystem = false;
+
+    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL)
+    private List<UserNotification> userNotifications;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -35,12 +38,24 @@ public class Notification {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public boolean isSystem() {
+        return isSystem;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSystem(boolean system) {
+        isSystem = system;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public List<UserNotification> getUserNotifications() {
+        return userNotifications;
+    }
+
+    public void setUserNotifications(List<UserNotification> userNotifications) {
+        this.userNotifications = userNotifications;
     }
 
     public Order getOrder() {
@@ -74,5 +89,6 @@ public class Notification {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
 }
 

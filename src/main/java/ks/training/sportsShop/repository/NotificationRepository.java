@@ -1,5 +1,6 @@
 package ks.training.sportsShop.repository;
 
+import ks.training.sportsShop.dto.UserNotificationDTO;
 import ks.training.sportsShop.entity.Category;
 import ks.training.sportsShop.entity.Notification;
 import org.springframework.data.domain.Page;
@@ -16,5 +17,21 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     Page<Notification> findByNotificationByTitle(@Param("title") String title,
                                         Pageable pageable);
 
-    List<Notification> findByUserIdOrderByCreatedAtDesc(Long userId);
+    @Query("""
+    SELECT new ks.training.sportsShop.dto.UserNotificationDTO(
+        n.id,
+        n.title,
+        n.message,
+        COALESCE(un.isRead, false)
+    )
+    FROM Notification n
+    LEFT JOIN UserNotification un 
+        ON un.notification.id = n.id 
+        AND un.user.id = :userId
+    WHERE n.isSystem = true 
+       OR un.user.id = :userId
+        ORDER BY n.createdAt DESC
+""")
+    List<UserNotificationDTO> findAllWithStatus(@Param("userId") Long userId);
+
 }

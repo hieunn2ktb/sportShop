@@ -35,6 +35,11 @@
 
     <!-- Template Stylesheet -->
     <link href="/client/css/style.css" rel="stylesheet">
+    <style>
+        .unread {
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -63,10 +68,10 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Order Id</th>
                     <th scope="col">Title</th>
                     <th scope="col">Message</th>
-                    <th scope="col">Created At</th>
+<%--                    <th scope="col">Created At</th>--%>
+                    <th scope="col"> Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,12 +82,20 @@
                         </td>
                     </tr>
                 </c:if>
-                <c:forEach var="notification" items="${notifications}" varStatus="status">
-                    <tr>
-                        <td>${notification.order.id}</td>
+                <c:forEach var="notification" items="${notifications}">
+                    <tr class="${!notification.read ? 'unread' : ''}">
                         <td>${notification.title}</td>
-                        <td>${notification.message}</td>
-                        <td>${notification.createdAt}
+                        <td>${notification.content}</td>
+<%--                        <td><fmt:formatDate value="${notification.createdAt}" pattern="dd/MM/yyyy HH:mm"/></td>--%>
+                        <td>
+                            <form action="/markAsRead" method="post">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                <input type="hidden" name="userId" value="${sessionScope.id}">
+                                <input type="hidden" name="notificationId" value="${notification.id}">
+                                <button type="submit" class="btn btn-sm ${notification.read ? 'btn-secondary' : 'btn-primary'}">
+                                        ${notification.read ? 'Đã đọc' : 'Đánh dấu đã đọc'}
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 </c:forEach>
@@ -92,13 +105,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="../layout/footer.jsp"/>
-
-
-<!-- Back to Top -->
-<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
-        class="fa fa-arrow-up"></i></a>
-
 
 <!-- JavaScript Libraries -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -110,6 +116,7 @@
 
 <!-- Template Javascript -->
 <script src="/client/js/main.js"></script>
+<script src="/client/js/notification.js"></script>
 </body>
 
 </html>

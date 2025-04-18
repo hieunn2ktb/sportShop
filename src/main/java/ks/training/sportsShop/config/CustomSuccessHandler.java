@@ -60,6 +60,8 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
             session.setAttribute("email", user.getEmail());
             int sum = user.getCart() == null ? 0 : user.getCart().getSum();
             session.setAttribute("sum", sum);
+            int countNotification = 0;
+            session.setAttribute("count", countNotification);
         }
 
     }
